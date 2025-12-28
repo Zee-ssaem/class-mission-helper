@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 
     if (existingApplications && existingApplications.length > 0) {
       return NextResponse.json(
-        { error: '이미 신청되었습니다.' },
+        { error: '오늘은 이미 신청되었습니다.' },
         { status: 400 }
       );
     }
