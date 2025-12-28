@@ -10,6 +10,7 @@ interface Mission {
   content: string;
   status: string;
   created_at: string;
+  assigned_at: string | null;
 }
 
 export default function CompletedMissionsList() {
@@ -31,9 +32,11 @@ export default function CompletedMissionsList() {
 
         if (fetchError) throw fetchError;
 
-        // 최신순으로 정렬 (created_at 기준 내림차순)
+        // 최신순으로 정렬 (assigned_at 우선, 없으면 created_at 기준 내림차순)
         const sortedMissions = (data || []).sort((a: Mission, b: Mission) => {
-          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+          const aDate = a.assigned_at ? new Date(a.assigned_at).getTime() : new Date(a.created_at).getTime();
+          const bDate = b.assigned_at ? new Date(b.assigned_at).getTime() : new Date(b.created_at).getTime();
+          return bDate - aDate;
         });
         setMissions(sortedMissions);
         setLoading(false);
@@ -121,13 +124,21 @@ export default function CompletedMissionsList() {
                   <p className="text-gray-900 font-medium">{mission.content}</p>
                   <p className="mt-2 text-sm text-gray-500">
                     <span className="font-medium">미션 부여일:</span>{' '}
-                    {new Date(mission.created_at).toLocaleString('ko-KR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
+                    {mission.assigned_at
+                      ? new Date(mission.assigned_at).toLocaleString('ko-KR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })
+                      : new Date(mission.created_at).toLocaleString('ko-KR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
                   </p>
                 </div>
               </div>

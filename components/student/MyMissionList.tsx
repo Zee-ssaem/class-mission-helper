@@ -9,6 +9,7 @@ interface Mission {
   content: string;
   status: string;
   created_at: string;
+  assigned_at: string | null;
 }
 
 export default function MyMissionList() {
@@ -31,9 +32,11 @@ export default function MyMissionList() {
         return;
       }
 
-      // 최신순으로 정렬 (created_at 기준 내림차순)
+      // 최신순으로 정렬 (assigned_at 우선, 없으면 created_at 기준 내림차순)
       const sortedMissions = (data.missions || []).sort((a: Mission, b: Mission) => {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        const aDate = a.assigned_at ? new Date(a.assigned_at).getTime() : new Date(a.created_at).getTime();
+        const bDate = b.assigned_at ? new Date(b.assigned_at).getTime() : new Date(b.created_at).getTime();
+        return bDate - aDate;
       });
       setMissions(sortedMissions);
     } catch (err) {
@@ -85,11 +88,17 @@ export default function MyMissionList() {
                   <p className="text-gray-900 font-medium">{mission.content}</p>
                   <p className="mt-2 text-sm text-gray-500">
                     <span className="font-medium">미션 부여일:</span>{' '}
-                    {new Date(mission.created_at).toLocaleDateString('ko-KR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
+                    {mission.assigned_at
+                      ? new Date(mission.assigned_at).toLocaleDateString('ko-KR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                      : new Date(mission.created_at).toLocaleDateString('ko-KR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
                   </p>
                 </div>
               </div>

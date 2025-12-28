@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
             category,
             content,
             status: 'completed',
+            assigned_at: new Date().toISOString(), // 미션 부여 시간 저장
           });
 
         if (insertError) throw insertError;
@@ -65,6 +66,7 @@ export async function POST(request: NextRequest) {
             category,
             content,
             status: 'completed',
+            assigned_at: new Date().toISOString(), // 미션 부여 시간 저장
           })
           .eq('student_name', studentName)
           .eq('status', 'pending')

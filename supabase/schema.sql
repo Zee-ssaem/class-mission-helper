@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS missions (
   category TEXT NOT NULL CHECK (category IN ('배달(전해주기)', '수합(모아오기)', '기타', '대기')),
   content TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed')),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  assigned_at TIMESTAMP WITH TIME ZONE
 );
 
 -- mission_applications 테이블: 하루 1회 신청 제한용
