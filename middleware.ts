@@ -25,10 +25,10 @@ export async function middleware(request: NextRequest) {
   }
 
   // 교사 대시보드 보호 (로그인 페이지는 제외)
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  if (pathname.startsWith('/admin') && pathname !== '/login') {
     const admin = request.cookies.get('admin');
     if (!admin || admin.value !== 'true') {
-      return NextResponse.redirect(new URL('/admin/login', request.url));
+      return NextResponse.redirect(new URL('/login', request.url));
     }
   }
 
