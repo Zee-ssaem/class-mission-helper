@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import WaitingListWithCheckbox from '@/components/admin/WaitingListWithCheckbox';
 import MissionAssignment from '@/components/admin/MissionAssignment';
+import CompletedMissionsList from '@/components/admin/CompletedMissionsList';
 
 export default function AdminDashboard() {
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
@@ -42,21 +43,28 @@ export default function AdminDashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* 왼쪽: 대기 명단 (체크박스) */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <WaitingListWithCheckbox
-              selectedStudents={selectedStudents}
-              onSelectionChange={setSelectedStudents}
-            />
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* 왼쪽: 대기 명단 (체크박스) */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <WaitingListWithCheckbox
+                selectedStudents={selectedStudents}
+                onSelectionChange={setSelectedStudents}
+              />
+            </div>
+
+            {/* 오른쪽: 미션 부여 폼 */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <MissionAssignment
+                selectedStudents={selectedStudents}
+                onAssignmentComplete={handleAssignmentComplete}
+              />
+            </div>
           </div>
 
-          {/* 오른쪽: 미션 부여 폼 */}
+          {/* 아래: 해결된 미션 목록 */}
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <MissionAssignment
-              selectedStudents={selectedStudents}
-              onAssignmentComplete={handleAssignmentComplete}
-            />
+            <CompletedMissionsList />
           </div>
         </div>
       </main>
