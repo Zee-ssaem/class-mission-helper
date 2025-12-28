@@ -84,7 +84,12 @@ export default function MyMissionList() {
                   </div>
                   <p className="text-gray-900 font-medium">{mission.content}</p>
                   <p className="mt-2 text-sm text-gray-500">
-                    {new Date(mission.created_at).toLocaleDateString('ko-KR')}
+                    <span className="font-medium">미션 부여일:</span>{' '}
+                    {new Date(mission.created_at).toLocaleDateString('ko-KR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
                   </p>
                 </div>
               </div>

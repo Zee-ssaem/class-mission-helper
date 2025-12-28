@@ -120,6 +120,7 @@ export default function CompletedMissionsList() {
                   </div>
                   <p className="text-gray-900 font-medium">{mission.content}</p>
                   <p className="mt-2 text-sm text-gray-500">
+                    <span className="font-medium">미션 부여일:</span>{' '}
                     {new Date(mission.created_at).toLocaleString('ko-KR', {
                       year: 'numeric',
                       month: 'long',
