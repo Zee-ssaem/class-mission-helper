@@ -7,13 +7,13 @@ interface MissionAssignmentProps {
   onAssignmentComplete: () => void;
 }
 
-const MISSION_CATEGORIES = ['학습', '생활', '봉사'] as const;
+const MISSION_CATEGORIES = ['배달(전해주기)', '수합(모아오기)', '기타'] as const;
 
 export default function MissionAssignment({
   selectedStudents,
   onAssignmentComplete,
 }: MissionAssignmentProps) {
-  const [category, setCategory] = useState<string>('학습');
+  const [category, setCategory] = useState<string>('배달(전해주기)');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);

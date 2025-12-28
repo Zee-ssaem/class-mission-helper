@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS students (
 CREATE TABLE IF NOT EXISTS missions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   student_name TEXT NOT NULL,
-  category TEXT NOT NULL CHECK (category IN ('학습', '생활', '봉사', '대기')),
+  category TEXT NOT NULL CHECK (category IN ('배달(전해주기)', '수합(모아오기)', '기타', '대기')),
   content TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
