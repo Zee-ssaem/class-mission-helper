@@ -51,7 +51,13 @@ export default function WaitingListWithCheckbox({
 
     fetchWaitingStudents();
 
-    // Realtime 구독 설정
+    // 커스텀 이벤트 리스너 추가 (미션 부여 후 명시적 새로고침)
+    const handleMissionsUpdated = () => {
+      fetchWaitingStudents();
+    };
+    window.addEventListener('missions-updated', handleMissionsUpdated);
+
+    // Realtime 구독 설정 (모든 변경사항 감지)
     const channel = supabase
       .channel('missions-changes')
       .on(
@@ -60,9 +66,10 @@ export default function WaitingListWithCheckbox({
           event: '*',
           schema: 'public',
           table: 'missions',
-          filter: 'status=eq.pending',
         },
-        () => {
+        (payload) => {
+          // status가 변경되거나 삽입/삭제될 때마다 새로고침
+          console.log('Missions table changed:', payload);
           fetchWaitingStudents();
         }
       )
@@ -70,6 +77,7 @@ export default function WaitingListWithCheckbox({
 
     return () => {
       supabase.removeChannel(channel);
+      window.removeEventListener('missions-updated', handleMissionsUpdated);
     };
   }, []);
 

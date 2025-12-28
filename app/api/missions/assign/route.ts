@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         if (insertError) throw insertError;
       } else {
         // pending 미션들을 completed로 업데이트
-        const { error: updateError } = await supabase
+        const { data: updatedMissions, error: updateError } = await supabase
           .from('missions')
           .update({
             category,
@@ -67,9 +67,17 @@ export async function POST(request: NextRequest) {
             status: 'completed',
           })
           .eq('student_name', studentName)
-          .eq('status', 'pending');
+          .eq('status', 'pending')
+          .select();
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error(`Update error for ${studentName}:`, updateError);
+          throw updateError;
+        }
+
+        if (!updatedMissions || updatedMissions.length === 0) {
+          console.warn(`No pending missions found for ${studentName}`);
+        }
       }
     });
 

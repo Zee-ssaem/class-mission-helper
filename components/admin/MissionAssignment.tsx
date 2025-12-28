@@ -57,6 +57,12 @@ export default function MissionAssignment({
       setMessage({ type: 'success', text: '미션이 성공적으로 부여되었습니다!' });
       setContent('');
       onAssignmentComplete();
+      
+      // 미션 부여 후 잠시 대기하여 Realtime 업데이트가 반영되도록 함
+      setTimeout(() => {
+        // 부모 컴포넌트에서 대기 명단을 새로고침하도록 트리거
+        window.dispatchEvent(new Event('missions-updated'));
+      }, 500);
     } catch (error) {
       setMessage({ type: 'error', text: '미션 부여 중 오류가 발생했습니다. 다시 시도해주세요.' });
     } finally {
