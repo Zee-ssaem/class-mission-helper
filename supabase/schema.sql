@@ -42,6 +42,33 @@ CREATE INDEX IF NOT EXISTS idx_profile_name ON profile(name);
 -- Realtime 활성화 (missions 테이블)
 ALTER PUBLICATION supabase_realtime ADD TABLE missions;
 
+-- RLS (Row Level Security) 정책 설정
+-- profile 테이블: 모든 사용자가 읽기 가능 (로그인용)
+ALTER TABLE profile ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public read access to profile" ON profile
+  FOR SELECT
+  USING (true);
+
+-- students 테이블: 모든 사용자가 읽기 가능
+ALTER TABLE students ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public read access to students" ON students
+  FOR SELECT
+  USING (true);
+
+-- missions 테이블: 모든 사용자가 읽기/쓰기 가능
+ALTER TABLE missions ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public access to missions" ON missions
+  FOR ALL
+  USING (true)
+  WITH CHECK (true);
+
+-- mission_applications 테이블: 모든 사용자가 읽기/쓰기 가능
+ALTER TABLE mission_applications ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public access to mission_applications" ON mission_applications
+  FOR ALL
+  USING (true)
+  WITH CHECK (true);
+
 -- 샘플 데이터 (선택사항)
 -- INSERT INTO profile (name, password) VALUES ('홍길동', 'password123');
 -- INSERT INTO students (profile_id) SELECT id FROM profile WHERE name = '홍길동';

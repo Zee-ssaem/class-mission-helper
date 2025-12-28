@@ -22,7 +22,16 @@ export async function POST(request: NextRequest) {
       .eq('password', password)
       .single();
 
-    if (error || !data) {
+    if (error) {
+      console.error('Supabase query error:', error);
+      return NextResponse.json(
+        { error: `데이터베이스 오류: ${error.message}` },
+        { status: 500 }
+      );
+    }
+
+    if (!data) {
+      console.log('No data found for password:', password);
       return NextResponse.json(
         { error: '비밀번호가 일치하지 않습니다.' },
         { status: 401 }
