@@ -64,11 +64,12 @@ export async function POST(request: NextRequest) {
     }
 
     // missions 테이블에 pending 상태로 미션 생성
+    // category는 교사가 미션을 부여할 때 설정되므로, 신청 시에는 '대기' 사용
     const { data: missionData, error: missionError } = await supabase
       .from('missions')
       .insert({
         student_name: studentName,
-        category: '대기',
+        category: '대기', // 신청 대기 상태
         content: '미션 신청 대기 중',
         status: 'pending',
       })
