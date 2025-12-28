@@ -31,7 +31,11 @@ export default function CompletedMissionsList() {
 
         if (fetchError) throw fetchError;
 
-        setMissions(data || []);
+        // 최신순으로 정렬 (created_at 기준 내림차순)
+        const sortedMissions = (data || []).sort((a: Mission, b: Mission) => {
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        });
+        setMissions(sortedMissions);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching completed missions:', err);

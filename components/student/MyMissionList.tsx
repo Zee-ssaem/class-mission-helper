@@ -31,7 +31,11 @@ export default function MyMissionList() {
         return;
       }
 
-      setMissions(data.missions || []);
+      // 최신순으로 정렬 (created_at 기준 내림차순)
+      const sortedMissions = (data.missions || []).sort((a: Mission, b: Mission) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      });
+      setMissions(sortedMissions);
     } catch (err) {
       setError('미션 목록을 불러오는 중 오류가 발생했습니다.');
     } finally {
