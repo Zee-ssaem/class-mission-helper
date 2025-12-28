@@ -16,16 +16,16 @@ export async function middleware(request: NextRequest) {
   // Supabase 세션 업데이트
   const response = await updateSession(request);
 
-  // 학생 대시보드 보호
-  if (pathname.startsWith('/student')) {
+  // 학생 대시보드 보호 (로그인 페이지는 제외)
+  if (pathname.startsWith('/student') && pathname !== '/login') {
     const studentName = request.cookies.get('student_name');
     if (!studentName) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
   }
 
-  // 교사 대시보드 보호
-  if (pathname.startsWith('/admin')) {
+  // 교사 대시보드 보호 (로그인 페이지는 제외)
+  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const admin = request.cookies.get('admin');
     if (!admin || admin.value !== 'true') {
       return NextResponse.redirect(new URL('/admin/login', request.url));
