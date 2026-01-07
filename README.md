@@ -31,13 +31,37 @@ git clone <your-repository-url>
 cd class-mission-helper
 ```
 
-### 2. 의존성 설치
+### 2. Git 인코딩 설정 (한글 커밋 메시지 지원)
+
+다른 컴퓨터에서도 한글 커밋 메시지가 깨지지 않도록 Git 인코딩을 설정합니다:
+
+**Windows (PowerShell):**
+```powershell
+git config --local core.quotepath false
+git config --local i18n.commitencoding utf-8
+git config --local i18n.logoutputencoding utf-8
+```
+
+**macOS/Linux:**
+```bash
+git config --local core.quotepath false
+git config --local i18n.commitencoding utf-8
+git config --local i18n.logoutputencoding utf-8
+```
+
+또는 자동 설정 스크립트를 실행하세요:
+- Windows: `.\setup.ps1`
+- macOS/Linux: `./setup.sh`
+
+> **참고**: 이 프로젝트는 `.gitattributes`와 `.editorconfig` 파일을 포함하여 모든 텍스트 파일이 UTF-8로 처리되도록 설정되어 있습니다.
+
+### 3. 의존성 설치
 
 ```bash
 npm install
 ```
 
-### 3. 환경 변수 설정
+### 4. 환경 변수 설정
 
 `.env.local` 파일을 생성하고 다음 환경 변수를 설정하세요:
 
@@ -47,7 +71,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ADMIN_PASSWORD=your_admin_password
 ```
 
-### 4. Supabase 데이터베이스 설정
+### 5. Supabase 데이터베이스 설정
 
 1. [Supabase](https://supabase.com)에서 새 프로젝트를 생성합니다.
 2. Supabase 대시보드의 SQL Editor에서 `supabase/schema.sql` 파일의 내용을 실행합니다.
@@ -55,7 +79,7 @@ ADMIN_PASSWORD=your_admin_password
    - Database > Replication 메뉴로 이동
    - `missions` 테이블의 Realtime을 활성화
 
-### 5. 개발 서버 실행
+### 6. 개발 서버 실행
 
 ```bash
 npm run dev
@@ -123,6 +147,10 @@ Vercel 대시보드의 프로젝트 설정 > Environment Variables에서 다음 
 - `NEXT_PUBLIC_SUPABASE_URL`: Supabase 프로젝트 URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase Anon Key
 - `ADMIN_PASSWORD`: 교사 로그인 비밀번호
+
+## 한글 인코딩 설정
+
+다른 컴퓨터에서 프로젝트를 클론한 후 한글 커밋 메시지가 깨지지 않도록 Git 인코딩을 설정해야 합니다. 자세한 내용은 [ENCODING.md](./ENCODING.md)를 참조하세요.
 
 ## 라이선스
 

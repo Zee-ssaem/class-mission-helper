@@ -1,0 +1,25 @@
+# EditorConfig는 다양한 에디터에서 일관된 코딩 스타일을 유지하도록 도와줍니다
+# https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{ts,tsx,js,jsx,json,css,html,md,sql}]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{sh,ps1}]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+

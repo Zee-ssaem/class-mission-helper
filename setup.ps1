@@ -53,6 +53,13 @@ if (Test-Path .git) {
     Write-Host "✓ Git 저장소 초기화 완료" -ForegroundColor Green
 }
 
+# Git 인코딩 설정 (한글 커밋 메시지 지원)
+Write-Host "`nGit 인코딩 설정 중..." -ForegroundColor Yellow
+git config --local core.quotepath false
+git config --local i18n.commitencoding utf-8
+git config --local i18n.logoutputencoding utf-8
+Write-Host "✓ Git 인코딩 설정 완료 (UTF-8)" -ForegroundColor Green
+
 Write-Host "`n설정이 완료되었습니다!" -ForegroundColor Green
 Write-Host "`n다음 단계:" -ForegroundColor Cyan
 Write-Host "1. 개발 서버 실행: npm run dev" -ForegroundColor White

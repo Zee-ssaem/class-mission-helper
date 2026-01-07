@@ -60,6 +60,14 @@ else
     echo "✓ Git 저장소 초기화 완료"
 fi
 
+# Git 인코딩 설정 (한글 커밋 메시지 지원)
+echo ""
+echo "Git 인코딩 설정 중..."
+git config --local core.quotepath false
+git config --local i18n.commitencoding utf-8
+git config --local i18n.logoutputencoding utf-8
+echo "✓ Git 인코딩 설정 완료 (UTF-8)"
+
 echo ""
 echo "설정이 완료되었습니다!"
 echo ""
