@@ -31,3 +31,7 @@ CREATE POLICY "Allow public access to mission_applications" ON mission_applicati
   USING (true)
   WITH CHECK (true);
 
+-- student_mission_stats 뷰: missions 테이블의 RLS 정책을 상속받습니다.
+-- 뷰는 읽기 전용이므로 별도의 RLS 정책 설정이 필요 없습니다.
+-- missions 테이블의 SELECT 정책이 뷰에도 적용됩니다.
+

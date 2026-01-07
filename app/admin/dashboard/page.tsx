@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import WaitingListWithCheckbox from '@/components/admin/WaitingListWithCheckbox';
 import MissionAssignment from '@/components/admin/MissionAssignment';
 import CompletedMissionsList from '@/components/admin/CompletedMissionsList';
+import StudentMissionStats from '@/components/admin/StudentMissionStats';
 
 export default function AdminDashboard() {
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
@@ -60,6 +61,11 @@ export default function AdminDashboard() {
                 onAssignmentComplete={handleAssignmentComplete}
               />
             </div>
+          </div>
+
+          {/* 아래: 학생별 미션 완료 횟수 */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <StudentMissionStats />
           </div>
 
           {/* 아래: 해결된 미션 목록 */}
